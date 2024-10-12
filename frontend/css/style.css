@@ -334,3 +334,40 @@ body {
 .dark-mode .chat__input{
     color: #000000;
 }
+
+/* responsividade */
+/* Estilo para o navbar toggle (ícone de hambúrguer) */
+.navbar__toggle {
+    display: none; /* Ocultar por padrão */
+    cursor: pointer;
+}
+
+.navbar__toggle-icon {
+    font-size: 24px; /* Tamanho do ícone */
+    color: #f2f2f2; /* Cor do ícone */
+}
+
+/* Media query para telas menores que 790px */
+@media (max-width: 790px) {
+    .navbar__menu {
+        display: none; /* Ocultar o menu por padrão */
+        flex-direction: column; /* Mudar direção do menu para coluna */
+        position: absolute; /* Para sobrepor o conteúdo */
+        top: 60px; /* Posicionar abaixo da navbar */
+        right: 0;
+        background-color: #121212; /* Fundo do menu */
+        width: 100%; /* Largura total */
+        padding: 10px 0; /* Espaçamento interno */
+        border-radius: 0 0 10px 10px; /* Bordas arredondadas */
+        z-index: 999; /* Para garantir que fique acima de outros elementos */
+    }
+
+    .navbar__menu.active {
+        display: flex; /* Mostrar o menu quando ativo */
+    }
+
+    .navbar__toggle {
+        display: block; /* Mostrar o ícone de hambúrguer */
+    }
+}
+
