@@ -22,13 +22,16 @@
     <section class="container">
 
         <section class="login">
-
+    
             <nav class="navbar">
                 <div class="navbar__logo">
                     <img src="./images/logo.png" alt="Zapgram Logo">
                     <span class="navbar__title">Zapgram</span>
                 </div>
-                <ul class="navbar__menu">
+                <div class="navbar__toggle" id="navbarToggle">
+                    <span class="navbar__toggle-icon">&#9776;</span> <!-- Ícone de hambúrguer -->
+                </div>
+                <ul class="navbar__menu" id="navbarMenu">
                     <li><a href="#">Recursos</a></li>
                     <li><a href="#">Privacidade</a></li>
                     <li><a href="#">Central de Ajuda</a></li>
@@ -37,21 +40,23 @@
                     <li><a href="#">Zapgram Web</a></li>
                 </ul>
             </nav>
-
+    
             <!-- Imagem e nome do grupo -->
             <div class="group-info">
                 <img src="./images/grupo.png" alt="Imagem do Grupo" class="group-info__image">
                 <h1 class="group-info__name">Sistemas distribuídos</h1>
             </div>
-
+    
             <h2>Entrar na conversa</h2>
             <form class="login__form">
                 <input type="text" class="login__input" placeholder="Seu nome" required />
                 <button type="submit" class="login__button">Entrar</button>
             </form>
         </section>
-
+    
     </section>
+    
+    
 
     <section class="chat">
         <section class="chat__messages">
@@ -68,4 +73,3 @@
     <script src="./js/script.js"></script>
 </body>
 </html>
-
