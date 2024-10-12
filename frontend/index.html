@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="../frontend/images/logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>Zapgram</title>
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fa-solid fa-sun sun" style="display: block;"></i>
+        <i class="fa-solid fa-moon moon" style="display: none;"></i>
+    </div>    
+    
+    
+    <section class="container">
+
+        <section class="login">
+
+            <nav class="navbar">
+                <div class="navbar__logo">
+                    <img src="./images/logo.png" alt="Zapgram Logo">
+                    <span class="navbar__title">Zapgram</span>
+                </div>
+                <ul class="navbar__menu">
+                    <li><a href="#">Recursos</a></li>
+                    <li><a href="#">Privacidade</a></li>
+                    <li><a href="#">Central de Ajuda</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Para Empresas</a></li>
+                    <li><a href="#">Zapgram Web</a></li>
+                </ul>
+            </nav>
+
+            <!-- Imagem e nome do grupo -->
+            <div class="group-info">
+                <img src="./images/grupo.png" alt="Imagem do Grupo" class="group-info__image">
+                <h1 class="group-info__name">Sistemas distribuídos</h1>
+            </div>
+
+            <h2>Entrar na conversa</h2>
+            <form class="login__form">
+                <input type="text" class="login__input" placeholder="Seu nome" required />
+                <button type="submit" class="login__button">Entrar</button>
+            </form>
+        </section>
+
+    </section>
+
+    <section class="chat">
+        <section class="chat__messages">
+        </section>
+
+        <form class="chat__form">
+            <input type="text" class="chat__input" placeholder="Digite uma mensagem" required />
+            <button type="submit" class="chat__button">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+        </form>
+    </section>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
+
