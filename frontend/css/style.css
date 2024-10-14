@@ -168,12 +168,15 @@ body {
     justify-content: space-between;
 }
 
+
 .chat__messages {
     flex-grow: 1;
     padding: 30px 30px 90px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow-y: auto;
+    max-height: 300px; /* ou um valor que você preferir */
 }
 
 .chat__form {
@@ -187,7 +190,6 @@ body {
     left: 0;
     width: 100%;
 }
-
 .chat__input {
     border: none;
     padding: 15px;
@@ -197,6 +199,9 @@ body {
     outline: none;
     color: #f2f2f2;
     font-size: 1rem;
+    min-height: 40px;
+    max-height: 100px;
+    overflow-y: auto;
 }
 
 .chat__button {
@@ -213,11 +218,13 @@ body {
 .chat__messages > div {
     padding: 10px;
     width: 100%;
-    max-width: 250px;
+    max-width: 250px; /* Pode ser ajustado conforme necessário */
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 15px;
     line-height: 22px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Estilo padrão das mensagens no tema claro */
@@ -339,6 +346,26 @@ body {
 .emoji:hover {
     background-color: #4d4d4d; /* Efeito ao passar o mouse */
 }
+
+
+/* tentando fixar erros */
+.chat__input {
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    flex-grow: 1; /* Permite que a caixa cresça */
+    background-color: #212121;
+    outline: none;
+    color: #f2f2f2;
+    font-size: 1rem;
+    min-height: 40px; /* Define uma altura mínima */
+    max-height: 100px; /* Pode ser ajustado conforme necessário */
+    overflow-y: auto; /* Permite rolagem se o texto for muito longo */
+}
+
+
+
+
 
 /*         dark mode           */
 /* Cor da lua no tema escuro */
