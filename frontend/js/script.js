@@ -124,131 +124,35 @@ document.getElementById('themeToggle').addEventListener('click', function() {
         moonIcon.style.display = 'none';
     }
 });
-
-
 // Responsividade
-
 document.addEventListener('DOMContentLoaded', function () {
     const toggle = document.getElementById('navbarToggle');
     const menu = document.getElementById('navbarMenu');
-
     toggle.addEventListener('click', () => {
         menu.classList.toggle('active'); // Alterna a classe 'active' no menu
     });
 });
 
-// reactions
-// Cria o ícone
-const reactionIcon = document.createElement('i');
-reactionIcon.className = 'fa-regular fa-face-smile';
-reactionIcon.id = 'reactionButton';
-
-// Adiciona o ícone à div da mensagem
-const messageDiv = document.querySelector('.message--other');
-messageDiv.appendChild(reactionIcon);
-
-
-
-// teste
-// Função para criar o ícone de reações
-function createReactionButton() {
-    const reactionIcon = document.createElement('i');
-    reactionIcon.className = 'fa-regular fa-face-smile';
-    reactionIcon.id = 'reactionButton';
-    return reactionIcon;
+// Função para selecionar emoji e inseri-lo no campo de texto
+function selectEmoji(emoji) {
+    const chatInput = document.getElementById('chat-input');
+    chatInput.value += emoji; // Adiciona o emoji ao valor do input
+    closeEmojiList(); // Fecha a lista de emojis
 }
 
-// Função para criar a lista de reações
-function createReactionList() {
-    const reactionList = document.createElement('div');
-    reactionList.className = 'reaction-list';
-
-    // Ícones de reações
-    const reactions = ['fa-face-smile', 'fa-face-frown', 'fa-heart', 'fa-thumbs-up', 'fa-thumbs-down'];
-    reactions.forEach(reaction => {
-        const icon = document.createElement('i');
-        icon.className = `fa-regular ${reaction} reaction-icon`; // Adiciona a nova classe reaction-icon
-        
-        // Adiciona evento de clique ao ícone de reação
-        icon.addEventListener('click', () => {
-            handleReactionClick(icon, reactionList);
-        });
-
-        reactionList.appendChild(icon);
-    });
-
-    return reactionList;
+// Função para fechar a lista de emojis
+function closeEmojiList() {
+    const emojiToggle = document.getElementById('emoji-toggle');
+    emojiToggle.checked = false; // Desmarca o checkbox
 }
 
-// Função para lidar com o clique na reação
-function handleReactionClick(selectedIcon, reactionList) {
-    const messageDiv = selectedIcon.closest('.message-container');
-    const existingReaction = messageDiv.querySelector('.reaction-display');
+// Fecha a lista de emojis se o usuário clicar fora dela
+document.addEventListener('click', function(event) {
+    const emojiContainer = document.querySelector('.emoji-container');
+    const emojiList = document.querySelector('.emoji-list');
 
-    // Remove a classe 'selected-reaction' de todos os ícones da lista
-    const allIcons = reactionList.querySelectorAll('.reaction-icon');
-    allIcons.forEach(icon => {
-        icon.classList.remove('selected-reaction');
-    });
-
-    // Verifica se a reação atual é a mesma que a existente
-    if (existingReaction) {
-        // Se for a mesma reação, remove a reação
-        if (existingReaction.classList.contains(selectedIcon.classList[1])) {
-            existingReaction.remove();
-            selectedIcon.classList.remove('selected-reaction'); // Remove a classe de seleção do ícone na lista
-            reactionList.style.display = 'none'; // Esconde a lista
-            return; // Sai da função
-        } else {
-            // Se não for a mesma, remove a reação anterior
-            existingReaction.remove();
-        }
+    // Verifica se o clique foi fora do emojiContainer e da emojiList
+    if (!emojiContainer.contains(event.target) && !emojiList.contains(event.target)) {
+        closeEmojiList();
     }
-
-    // Adiciona a classe para indicar a reação selecionada apenas ao ícone da lista
-    selectedIcon.classList.add('selected-reaction');
-
-    // Clone do ícone selecionado (sem a classe `selected-reaction`)
-    const chosenReactionIcon = selectedIcon.cloneNode(true); 
-    chosenReactionIcon.classList.remove('selected-reaction'); // Remove a classe para o ícone na mensagem
-    chosenReactionIcon.classList.add('reaction-display'); // Adiciona a classe de exibição da reação
-    messageDiv.appendChild(chosenReactionIcon); // Adiciona o ícone da reação escolhida na mensagem
-
-    // Esconde a lista de reações após a escolha
-    reactionList.style.display = 'none';
-}
-
-// Função para anexar a lista de reações a uma mensagem
-function attachReactionsToMessage(messageDiv) {
-    // Cria o botão de reações e a lista
-    const reactionIcon = createReactionButton();
-    const reactionList = createReactionList();
-
-    // Adiciona o ícone à mensagem
-    messageDiv.appendChild(reactionIcon);
-    
-    // Posiciona a lista de reações dentro da mensagem
-    messageDiv.appendChild(reactionList);
-
-    // Exibe ou esconde a lista ao clicar no ícone de reações
-    reactionIcon.addEventListener('click', function(e) {
-        // Alterna a visibilidade da lista de reações
-        reactionList.style.display = reactionList.style.display === 'flex' ? 'none' : 'flex';
-    });
-
-    // Esconde a lista ao clicar fora dela
-    document.addEventListener('click', function(e) {
-        if (!reactionIcon.contains(e.target) && !reactionList.contains(e.target)) {
-            reactionList.style.display = 'none';
-        }
-    });
-}
-
-// Seleciona todas as mensagens com a classe 'message--other'
-const messageDivs = document.querySelectorAll('.message--other');
-
-// Itera sobre todas as mensagens e adiciona a funcionalidade de reações
-messageDivs.forEach(messageDiv => {
-    messageDiv.classList.add('message-container'); // Adiciona a classe para o posicionamento correto
-    attachReactionsToMessage(messageDiv); // Chama a função para anexar o botão de reações e a lista
 });
