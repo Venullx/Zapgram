@@ -49,7 +49,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-radius: 0;
-    z-index: 1000; /* Garante que fique sobre outros elementos */
+    z-index: 1000;
 }
 
 .navbar__logo img {
@@ -241,8 +241,8 @@ body {
 
 /* Modifica a cor da mensagem do próprio usuário no tema escuro */
 .dark-mode .message--self {
-    background-color: #D9FDD3; /* Cor no tema escuro */
-    color: #000000; /* Texto preto no tema escuro */
+    background-color: #D9FDD3;
+    color: #000000;
 }
 
 /* Modifica a cor das outras mensagens no tema escuro */
@@ -279,38 +279,36 @@ body {
 /* sun/moon */
 /* Estilizando o container dos ícones para ter uma borda arredondada */
 .theme-toggle {
-    position: absolute;
+    position: fixed; /* Troque de absolute para fixed */
     top: 5px;
     right: 5px;
     cursor: pointer;
-    font-size: 12px; /* Tamanho do ícone */
+    font-size: 12px;
+    z-index: 1000; /* Garante que o ícone fique acima de outros elementos */
 }
 
 /* Borda arredondada ao redor dos ícones de sol e lua */
 .theme-toggle i {
-    color: #FFD700; /* Cor inicial do sol */
-    background-color: #333; /* Cor de fundo ao redor dos ícones */
-    border-radius: 50%; /* Borda completamente arredondada */
-    padding: 5px; /* Espaço interno para deixar o ícone centralizado */
-    border: 1px solid #FFD700; /* Adiciona a borda ao redor do ícone */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Suavizar a transição de cores */
+    color: #FFD700;
+    background-color: #333;
+    border-radius: 50%;
+    padding: 5px;
+    border: 1px solid #FFD700;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Cor da lua no tema escuro */
 .dark-mode .fa-moon {
-    color: #FFD700; /* Cor do ícone de lua no tema escuro */
-    background-color: #000; /* Fundo escuro no tema escuro */
-    border: 2px solid #FFD700; /* Borda ao redor da lua */
+    color: #FFD700;
+    background-color: #000;
+    border: 2px solid #FFD700;
 }
 
-/* Cor do sol no tema claro */
 .dark-mode .fa-sun {
-    color: #FF4500; /* Cor do ícone de sol no tema claro */
-    background-color: #fff; /* Fundo claro no tema claro */
-    border: 2px solid #FF4500; /* Borda ao redor do sol */
+    color: #FF4500;
+    background-color: #fff;
+    border: 2px solid #FF4500;
 }
 
-/* Ocultar o ícone de sol no tema escuro e mostrar a lua */
 .dark-mode .sun {
     display: none;
 }
@@ -318,6 +316,7 @@ body {
 .dark-mode .moon {
     display: block;
 }
+
 
 .dark-mode .chat__form{
     background-color: #F0F2F5;
@@ -327,7 +326,8 @@ body {
     background-color: #ffffff;
 }
 
-.dark-mode .material-symbols-outlined {
+.dark-mode .material-symbols-outlined,
+.dark-mode .emojis {
     color: #54656F;
 }
 
@@ -335,39 +335,142 @@ body {
     color: #000000;
 }
 
-/* responsividade */
-/* Estilo para o navbar toggle (ícone de hambúrguer) */
 .navbar__toggle {
-    display: none; /* Ocultar por padrão */
+    display: none;
     cursor: pointer;
 }
 
 .navbar__toggle-icon {
-    font-size: 24px; /* Tamanho do ícone */
-    color: #f2f2f2; /* Cor do ícone */
+    font-size: 24px;
+    color: #f2f2f2;
 }
 
 /* Media query para telas menores que 790px */
 @media (max-width: 790px) {
     .navbar__menu {
-        display: none; /* Ocultar o menu por padrão */
-        flex-direction: column; /* Mudar direção do menu para coluna */
-        position: absolute; /* Para sobrepor o conteúdo */
-        top: 60px; /* Posicionar abaixo da navbar */
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
         right: 0;
-        background-color: #121212; /* Fundo do menu */
-        width: 100%; /* Largura total */
-        padding: 10px 0; /* Espaçamento interno */
-        border-radius: 0 0 10px 10px; /* Bordas arredondadas */
-        z-index: 999; /* Para garantir que fique acima de outros elementos */
+        background-color: #121212;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 0 0 10px 10px;
+        z-index: 999;
     }
 
     .navbar__menu.active {
-        display: flex; /* Mostrar o menu quando ativo */
+        display: flex;
     }
 
     .navbar__toggle {
-        display: block; /* Mostrar o ícone de hambúrguer */
+        display: block;
     }
+}
+
+/* reaction icon */
+.message--other {
+    position: relative;
+    padding-right: 30px;
+}
+
+#reactionButton {
+    font-size: 20px;
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.message--other:hover #reactionButton {
+    opacity: 1;
+}
+
+
+
+
+/* Reações */
+.reaction-list {
+    display: none;
+    position: absolute;
+    flex-direction: row;
+    gap: 10px;
+    background-color: #333;
+    border-radius: 0px 10px 10px 10px;
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%);
+    left: 360px;
+    top: 65%;
+}
+
+.reaction-display {
+    position: absolute;
+    right: 0;
+    border-radius: 25px;
+    padding: 2px;
+    background-color: #333
+}
+
+.dark-mode .reaction-display{
+    background-color: #FFFFFF
+}
+
+/* emojis */
+.chat__form {
+    position: relative;
+}
+
+.emoji-container {
+    display: inline-block;
+    position: relative;
+}
+
+.emoji-toggle {
+    display: none; /* Esconde o checkbox */
+}
+
+.emojis {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.emoji-list {
+    display: none; /* Inicialmente escondido */
+    position: absolute;
+    top: -110px; /* Posiciona acima do ícone */
+    left: 20px;
+    background-color: #333333;
+    border: 1px solid #212121;
+    padding: 5px;
+    border-radius: 5px 5px 5px 0px;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.emoji-toggle:checked + .emojis + .emoji-list {
+    display: block; /* Mostra a lista quando o checkbox está checado */
+}
+
+.emoji {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.emoji:hover {
+    background-color: #474747; /* Efeito ao passar o mouse */
+}
+
+.dark-mode .emoji-list{
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.dark-mode .emoji:hover {
+    background-color: #f0f0f0; /* Efeito ao passar o mouse */
 }
 
