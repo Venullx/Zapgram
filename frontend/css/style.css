@@ -361,9 +361,77 @@ body {
     overflow-y: auto; /* Permite rolagem se o texto for muito longo */
 }
 
+/* reaction icon */
+.message--other {
+    position: relative;
+    padding-right: 30px;
+}
+
+#reactionButton {
+    font-size: 20px;
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.message--other:hover #reactionButton {
+    opacity: 1;
+}
 
 
+/* Reações */
+.reaction-list {
+    display: none;
+    position: absolute;
+    flex-direction: row;
+    gap: 10px;
+    background-color: #333;
+    border-radius: 0px 10px 10px 10px;
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%);
+    left: 360px;
+    top: 60%;
+}
 
+.reaction-list i {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #fff;
+    transition: transform 0.2s ease;
+}
+
+.reaction-list i:hover {
+    transform: scale(1.2);
+}
+
+.message-container {
+    position: relative;
+}
+
+#reactionButton {
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    right: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.reaction-icon.selected-reaction {
+    color: gold;
+}
+
+.reaction-display {
+    position: absolute;
+    right: 0;
+    border-radius: 25px;
+    padding: 2px;
+    background-color: #333
+}
 
 /*         dark mode           */
 /* Cor da lua no tema escuro */
