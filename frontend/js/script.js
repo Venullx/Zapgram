@@ -156,104 +156,154 @@ document.addEventListener('click', function(event) {
         closeEmojiList();
     }
 });
+
 // reactions
-// Cria o ícone
-const reactionIcon = document.createElement('i');
-reactionIcon.className = 'fa-regular fa-face-smile';
-reactionIcon.id = 'reactionButton';
-// Adiciona o ícone à div da mensagem
-const messageDiv = document.querySelector('.message--other');
-messageDiv.appendChild(reactionIcon);
-// teste
-// Substituindo as classes FontAwesome por emojis reais
-const reactions = ['😂', '😢', '❤️', '👍', '👎'];
-// Função para criar o botão de reações (usando FontAwesome)
-function createReactionButton() {
-    const reactionIcon = document.createElement('i');
-    reactionIcon.classList.add('fa-regular', 'fa-face-smile'); // Adiciona as classes FontAwesome
-    reactionIcon.id = 'reactionButton';
-    reactionIcon.style.cursor = 'pointer'; // Define como clicável
-    return reactionIcon;
-}
-// Função para criar a lista de reações (com emojis)
-function createReactionList() {
+// Emojis de reações
+const reactions = ['😂', '😢', '❤️', '👍', '😎'];
+
+// Função para criar o ícone de reações
+function createReactionIcon(messageDiv) {
+    const reactionIcon = document.createElement('span');
+    reactionIcon.className = 'fa-regular fa-face-smile';
+    reactionIcon.style.position = 'absolute'; // Posicionado fora da mensagem
+    reactionIcon.style.right = '-20px'; // Ajusta a posição ao lado da mensagem
+    reactionIcon.style.top = '50%';
+    reactionIcon.style.transform = 'translateY(-50%)';
+    reactionIcon.style.fontSize = '20px';
+    reactionIcon.style.cursor = 'pointer';
+    reactionIcon.style.display = 'none'; // Inicialmente escondido
+
+    // Cria a lista de reações
     const reactionList = document.createElement('div');
     reactionList.className = 'reaction-list';
+    reactionList.style.position = 'absolute';
+    reactionList.style.display = 'none'; // Inicialmente escondido
+    reactionList.style.backgroundColor = '#fff';
+    reactionList.style.border = '1px solid #ccc';
     reactionList.style.padding = '5px';
-    // Emojis de reações
+    reactionList.style.zIndex = '1000';
+    reactionList.style.borderRadius = '0px, 5px, 5px, 5px';
+    reactionList.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)';
+    reactionList.style.top = 'calc(50% + 10px)'; // Ajusta a posição logo abaixo do ícone
+    reactionList.style.right = '0'; // Alinha ao ícone
+    reactionList.style.transform = 'translateX(-100px)'; // Move 100px para a esquerda
+    reactionList.style.width = '210px'; // Defina uma largura fixa para cobrir as reações
+
+    
+
     reactions.forEach(reaction => {
         const emoji = document.createElement('span');
-        emoji.textContent = reaction; // Define o emoji
-        emoji.className = 'reaction-icon';
+        emoji.textContent = reaction;
+        emoji.className = 'reaction-emoji';
         emoji.style.fontSize = '20px';
-        emoji.style.bottom = '-15px';
         emoji.style.cursor = 'pointer';
-        // Adiciona evento de clique ao emoji de reação
+        emoji.style.marginRight = '5px';
+
+        // Evento de clique no emoji
         emoji.addEventListener('click', () => {
-            handleReactionClick(emoji, reactionList);
+            handleReactionClick(emoji);
+            reactionList.style.display = 'none'; // Esconde a lista após a seleção
         });
+
         reactionList.appendChild(emoji);
     });
-    return reactionList;
-}
-// Função para lidar com o clique na reação
-function handleReactionClick(selectedEmoji, reactionList) {
-    const messageDiv = selectedEmoji.closest('.message-container');
-    const existingReaction = messageDiv.querySelector('.reaction-display');
-    // Remove a classe 'selected-reaction' de todos os emojis da lista
-    const allEmojis = reactionList.querySelectorAll('.reaction-icon');
-    allEmojis.forEach(emoji => {
-        emoji.classList.remove('selected-reaction');
-    });
-    // Verifica se a reação atual é a mesma que a existente
-    if (existingReaction) {
-        // Se for a mesma reação, remove a reação
-        if (existingReaction.textContent === selectedEmoji.textContent) {
-            existingReaction.remove();
-            selectedEmoji.classList.remove('selected-reaction'); // Remove a classe de seleção
-            reactionList.style.display = 'none'; // Esconde a lista
-            return; // Sai da função
-        } else {
-            // Se não for a mesma, remove a reação anterior
-            existingReaction.remove();
-        }
-    }
-    // Adiciona a classe para indicar a reação selecionada
-    selectedEmoji.classList.add('selected-reaction');
-    // Clone do emoji selecionado
-    const chosenReactionEmoji = selectedEmoji.cloneNode(true);
-    chosenReactionEmoji.classList.remove('selected-reaction'); // Remove a classe para o emoji na mensagem
-    chosenReactionEmoji.classList.add('reaction-display'); // Adiciona a classe de exibição da reação
-    messageDiv.appendChild(chosenReactionEmoji); // Adiciona o emoji da reação escolhida na mensagem
-    // Esconde a lista de reações após a escolha
-    reactionList.style.display = 'none';
-}
-// Função para anexar a lista de reações a uma mensagem
-function attachReactionsToMessage(messageDiv) {
-    // Cria o botão de reações e a lista
-    const reactionIcon = createReactionButton();
-    const reactionList = createReactionList();
-    // Adiciona o ícone à mensagem
-    messageDiv.appendChild(reactionIcon);
-    
-    // Posiciona a lista de reações dentro da mensagem
-    messageDiv.appendChild(reactionList);
-    // Exibe ou esconde a lista ao clicar no ícone de reações
-    reactionIcon.addEventListener('click', function(e) {
-        // Alterna a visibilidade da lista de reações
+
+    // Mostra a lista de reações ao clicar no ícone
+    reactionIcon.addEventListener('click', (event) => {
+        event.stopPropagation(); // Evita fechar a lista ao clicar no ícone
         reactionList.style.display = reactionList.style.display === 'flex' ? 'none' : 'flex';
     });
-    // Esconde a lista ao clicar fora dela
-    document.addEventListener('click', function(e) {
-        if (!reactionIcon.contains(e.target) && !reactionList.contains(e.target)) {
+
+    // Anexa o ícone de reações e a lista fora do bloco da mensagem
+    messageDiv.appendChild(reactionIcon);
+    messageDiv.appendChild(reactionList);
+    
+    // Fechar a lista ao clicar fora dela
+    document.addEventListener('click', (event) => {
+        if (!reactionList.contains(event.target) && reactionList.style.display === 'flex') {
             reactionList.style.display = 'none';
         }
     });
+
+    return reactionIcon;
 }
-// Seleciona todas as mensagens com a classe 'message--other'
-const messageDivs = document.querySelectorAll('.message--other');
-// Itera sobre todas as mensagens e adiciona a funcionalidade de reações
-messageDivs.forEach(messageDiv => {
-    messageDiv.classList.add('message-container'); // Adiciona a classe para o posicionamento correto
-    attachReactionsToMessage(messageDiv); // Chama a função para anexar o botão de reações e a lista
+
+// Função para lidar com o clique na reação
+function handleReactionClick(selectedEmoji) {
+    const messageDiv = selectedEmoji.closest('.message-container');
+    const existingReaction = messageDiv.querySelector('.reaction-display');
+    const selectedReaction = selectedEmoji.textContent; // Captura o emoji que foi clicado
+
+    // Verifica se a reação selecionada já está na mensagem
+    if (existingReaction && existingReaction.textContent === selectedReaction) {
+        existingReaction.remove(); // Remove a reação existente se for a mesma
+    } else {
+        // Remove a reação existente se houver
+        if (existingReaction) {
+            existingReaction.remove();
+        }
+
+        // Adiciona a nova reação
+        const chosenReactionEmoji = selectedEmoji.cloneNode(true);
+        chosenReactionEmoji.classList.add('reaction-display');
+        messageDiv.appendChild(chosenReactionEmoji);
+    }
+}
+
+
+// Função para anexar reações a uma mensagem
+function attachReactionsToMessage(messageDiv) {
+    const reactionIcon = createReactionIcon(messageDiv);
+    messageDiv.classList.add('message-container');
+    messageDiv.style.position = 'relative'; // Para manter o ícone e a lista dentro da caixa de mensagem
+
+    // Mostra o ícone de reações ao passar o mouse sobre a mensagem
+    messageDiv.addEventListener('mouseenter', () => {
+        reactionIcon.style.display = 'inline'; // Mostra o ícone ao passar o mouse
+    });
+
+    messageDiv.addEventListener('mouseleave', () => {
+        if (document.querySelector('.reaction-list').style.display !== 'flex') {
+            reactionIcon.style.display = 'none'; // Esconde o ícone se a lista não estiver visível
+        }
+    });
+}
+
+// Função para adicionar uma nova mensagem
+function addMessage(content, sender) {
+    const chatMessages = document.querySelector('.chat__messages');
+
+    // Cria a nova div da mensagem
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add(sender === 'self' ? 'message--self' : 'message--other');
+
+    // Se for uma mensagem de outro usuário, adicionar o nome do remetente
+    if (sender !== 'self') {
+        const senderSpan = document.createElement('span');
+        senderSpan.className = 'message--sender';
+        senderSpan.style.color = 'darkkhaki';
+        senderSpan.textContent = sender;
+        messageDiv.appendChild(senderSpan);
+    }
+
+    messageDiv.appendChild(document.createTextNode(content));
+
+    // Anexa a nova mensagem à seção de mensagens
+    chatMessages.appendChild(messageDiv);
+
+    // Anexa reações à nova mensagem
+    attachReactionsToMessage(messageDiv);
+}
+
+// Observa a adição de novas mensagens dinamicamente
+const observer = new MutationObserver(() => {
+    const messageDivs = document.querySelectorAll('.chat__messages .message--other');
+    messageDivs.forEach(messageDiv => {
+        if (!messageDiv.classList.contains('message-container')) {
+            attachReactionsToMessage(messageDiv);
+        }
+    });
 });
+
+// Configura o observer para observar alterações no DOM
+observer.observe(document.querySelector('.chat__messages'), { childList: true, subtree: true });
