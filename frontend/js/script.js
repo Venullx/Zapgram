@@ -15,43 +15,47 @@ const colors = [
     "cornflowerblue",
     "darkkhaki",
     "hotpink",
-    "gold"
-]
+    "gold",
+    "tomato",
+    "mediumseagreen",
+    "slateblue",
+    "orange",
+    "mediumvioletred",
+    "lightcoral",
+    "steelblue"
+];
 
-const user = { id: "", name: "", color: "" }
+const user = { id: "", name: "", color: "" };
 
-let websocket
+let websocket;
 
 const createMessageSelfElement = (content) => {
-    const div = document.createElement("div")
-
-    div.classList.add("message--self")
-    div.innerHTML = content
-
-    return div
-}
+    const div = document.createElement("div");
+    div.classList.add("message--self");
+    div.innerHTML = content;
+    return div;
+};
 
 const createMessageOtherElement = (content, sender, senderColor) => {
-    const div = document.createElement("div")
-    const span = document.createElement("span")
+    const div = document.createElement("div");
+    const span = document.createElement("span");
 
-    div.classList.add("message--other")
+    div.classList.add("message--other");
 
-    span.classList.add("message--sender")
-    span.style.color = senderColor
+    span.classList.add("message--sender");
+    span.style.color = senderColor;
 
-    div.appendChild(span)
+    div.appendChild(span);
+    span.innerHTML = sender;
+    div.innerHTML += content;
 
-    span.innerHTML = sender
-    div.innerHTML += content
-
-    return div
-}
+    return div;
+};
 
 const getRandomColor = () => {
-    const randomIndex = Math.floor(Math.random() * colors.length)
-    return colors[randomIndex]
-}
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+};
 
 const scrollScreen = () => {
     window.scrollTo({
